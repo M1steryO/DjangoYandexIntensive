@@ -10,7 +10,7 @@ git clone https://github.com/M1steryO/DjangoYandexIntensive.git
 Install dependencies.
 
 ```bash
-cd YandexIntensive
+cd DjangoYandexIntensive
 pip install -r requirements.txt
 ```
 
