@@ -7,10 +7,14 @@ Clone project from github.
 ```bash
 git clone https://github.com/M1steryO/DjangoYandexIntensive.git
 ```
-Install dependencies.
+
+
+Create a Virtual Environment and install dependencies.
 
 ```bash
 cd DjangoYandexIntensive
+python -m venv venv
+venv\Scripts\activate.bat
 pip install -r requirements.txt
 ```
 
