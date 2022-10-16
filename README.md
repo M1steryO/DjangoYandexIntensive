@@ -33,7 +33,7 @@ To run the application write this command.
 python manage.py runserver
 ```
 
-After that, the application will be launched on the local server http://127.0.0.1:8000/.
+After that, the application will be launched on http://127.0.0.1:8000/.
 
 
 ## License
