@@ -21,8 +21,8 @@ pip install -r requirements.txt
 Create file .env for secret data and put data there.
 
 ```shell
-SECRET_KEY=django-insecure-do*!50c&l0_bjjc9guy-fzd$m(v^y@er=5n(4de^)n9(1!d!_v
-ALLOWED_HOSTS="localhost 127.0.0.1"
+SECRET_KEY=django_secret_key
+ALLOWED_HOSTS="allowed_host_1 allowed_host_2"
 ```
 
 ## Usage
