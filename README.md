@@ -23,6 +23,7 @@ Create file .env for secret data and put data there.
 ```shell
 SECRET_KEY=django_secret_key
 ALLOWED_HOSTS="allowed_host_1 allowed_host_2"
+DEBUG=True
 ```
 
 ## Usage
