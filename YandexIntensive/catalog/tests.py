@@ -1,18 +1,94 @@
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
+
+from .models import Category, Tag, Item
 
 
 class StaticURLTests(TestCase):
-    def test_catalog_main_page(self):
-        response = Client().get(path='/catalog/')
-        self.assertEqual(response.status_code, 200)
+    endpoint_status = {
+        '/catalog/': 200,
+        '/catalog/1/': 200,
+        '/catalog/0/': 404,
+        '/catalog/-1/': 404,
+        '/catalog/1str/': 404,
+    }
 
-    def test_catalog_item_endpoint(self):
-        correct_item_examples = ["123", "3131", "1"]
-        for c_item in correct_item_examples:
-            correct_response = Client().get(path=f"/catalog/{c_item}/")
-            self.assertEqual(correct_response.status_code, 200)
+    def test_catalog_pages(self):
+        for url, status in self.endpoint_status.items():
+            with self.subTest(url=url):
+                response = Client().get(path=url)
+                self.assertEqual(status, response.status_code)
 
-        incorrect_item_examples = ["0", "-123", "1.23", "abc", "1str"]
-        for inc_item in incorrect_item_examples:
-            incorrect_response = Client().get(path=f"/catalog/{inc_item}/")
-            self.assertEqual(incorrect_response.status_code, 404)
+
+class ModelsTest(TestCase):
+    item_text_checking = {
+        "text": False,
+        "превосходно": True,
+        "роскошно": True
+    }
+    category_weight = {
+        0: False,
+        100: True,
+        32769: False,
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.category = Category.objects.create(is_published=True,
+                                               name='Тестовая категория',
+                                               slug="test-category-slug",
+                                               weight=150)
+        cls.tag = Tag.objects.create(is_published=True,
+                                     name="Тестовый тег",
+                                     slug="test-tag-slug")
+
+    def test_create_one_letter(self):
+        item_count = Item.objects.count()
+
+        for text, is_correct in self.item_text_checking.items():
+            with self.subTest(text=text):
+                if is_correct:
+                    self.item = Item(name="Тестовый item",
+                                     category=self.category,
+                                     text=text)
+                    self.item.full_clean()
+                    self.item.save()
+                    self.item.tags.add(self.tag)
+                    self.assertEqual(Item.objects.count(), item_count + 1)
+                    item_count += 1
+                else:
+                    with self.assertRaises(ValidationError):
+                        self.item = Item(name="Тестовый item",
+                                         category=self.category,
+                                         text=text)
+                        self.item.full_clean()
+                        self.item.save()
+                        self.item.tags.add(self.tag)
+                    self.assertEqual(Item.objects.count(), item_count)
+
+    def test_create_category_weight(self):
+        category_count = Category.objects.count()
+
+        for weight, is_correct in self.category_weight.items():
+            with self.subTest(weight=weight):
+                if is_correct:
+                    self.category = Category(is_published=True,
+                                             name='Тестовая категория',
+                                             slug="category-slug",
+                                             weight=weight)
+                    self.category.full_clean()
+                    self.category.save()
+                    self.assertEqual(Category.objects.count(),
+                                     category_count + 1)
+                    category_count += 1
+                else:
+                    with self.assertRaises(ValidationError):
+                        self.category = Category(is_published=True,
+                                                 name='Тестовая категория',
+                                                 slug="category-slug",
+                                                 weight=weight)
+                        self.category.full_clean()
+                        self.category.save()
+                    self.assertEqual(Category.objects.count(),
+                                     category_count)

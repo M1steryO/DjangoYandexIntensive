@@ -1,0 +1,132 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "laptops",
+    "slug": "laptops",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "smartphones",
+    "slug": "smartphones",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "wqe",
+    "slug": "qweq"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "qwe",
+    "slug": "qwe"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "asd",
+    "slug": "asd"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "rty",
+    "slug": "rty"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "yui",
+    "slug": "yui"
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "DFWFWF",
+    "text": "превосходно, роскошно",
+    "category": 1,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 6,
+  "fields": {
+    "is_published": true,
+    "name": "DADA",
+    "text": "превосходно, роскошно",
+    "category": 1,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 7,
+  "fields": {
+    "is_published": true,
+    "name": "EQEQ",
+    "text": "превосходно, роскошно",
+    "category": 2,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 8,
+  "fields": {
+    "is_published": true,
+    "name": "POPO",
+    "text": "превосходно, роскошно",
+    "category": 2,
+    "tags": [
+      4
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 9,
+  "fields": {
+    "is_published": true,
+    "name": "OIO",
+    "text": "превосходно, роскошно",
+    "category": 1,
+    "tags": [
+      5
+    ]
+  }
+}
+]
