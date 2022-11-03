@@ -1,10 +1,12 @@
+import re
+
 from django.core.exceptions import ValidationError
 
 
 def validate_item_text(value):
     must_be_in_our_item = {"превосходно", "роскошно", }
-
-    cleaned_value = set(value.lower().split())
+    cleaned_string = re.sub(r'[^\w\s]', '', value)
+    cleaned_value = set(cleaned_string.split())
     difference = must_be_in_our_item - cleaned_value
 
     if len(difference) == len(must_be_in_our_item):
