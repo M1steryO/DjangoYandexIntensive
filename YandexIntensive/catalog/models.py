@@ -29,8 +29,8 @@ class Tag(CoreWithSlug):
 
 class Item(Core):
     text = models.TextField(validators=[
-        validators.validate_item_text,
-    ], verbose_name="Описание",
+        validators.validate_must_be_param("превосходно", "роскошно")],
+        verbose_name="Описание",
         help_text='Описание должно быть больше,'
                   'чем из 2х слов и содержать слова "превосходно, роскошно" ')
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
