@@ -12,9 +12,9 @@ DEBUG = eval(os.getenv("DEBUG", default='True'))
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'tinymce',
     'django_cleanup.apps.CleanupConfig',
     'sorl.thumbnail',
-    'django_cleanup',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

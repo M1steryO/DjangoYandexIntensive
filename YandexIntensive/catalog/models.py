@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django_cleanup.signals import cleanup_pre_delete
 from sorl.thumbnail import get_thumbnail, delete
+from tinymce.models import HTMLField
 
 from . import validators
 from core.models import Core, CoreWithSlug
@@ -31,7 +32,7 @@ class Tag(CoreWithSlug):
 
 
 class Item(Core):
-    text = models.TextField(validators=[
+    text = HTMLField(validators=[
         validators.validate_must_be_param("превосходно", "роскошно")],
         verbose_name="Описание",
         help_text='Описание должно быть больше,'
