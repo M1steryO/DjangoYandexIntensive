@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'sorl.thumbnail',
+    'django_cleanup',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
