@@ -5,3 +5,7 @@ pycodestyle==2.9.1
 python-dotenv==0.21.0
 pytz==2022.5
 sqlparse==0.4.3
+sorl-thumbnail==12.9.0
+django-tinymce==3.5.0
+Pillow==9.3.0
+django-cleanup==6.0.0
