@@ -41,20 +41,6 @@ class Item(Core):
                                  help_text="Выберете категорию")
     tags = models.ManyToManyField(Tag, verbose_name="Tags")
 
-    @property
-    def get_img(self):
-        return get_thumbnail(self.img, '300x300', crop="center", quality=51)
-
-    def image_tmb(self):
-        if self.upload:
-            return mark_safe(
-                f'<img src="{self.get_img.url}"'
-            )
-        return 'Нет изображения'
-
-    image_tmb.short_description = 'Превью'
-    image_tmb.allow_tags = True
-
     def __str__(self):
         return self.name
 
@@ -77,6 +63,20 @@ class Gallery(models.Model):
         verbose_name = "Изображение"
         verbose_name_plural = "Галлерея"
 
+    @property
+    def get_img(self):
+        return get_thumbnail(self.upload, '300x300', crop="center", quality=51)
+
+    def image_tmb(self):
+        if self.upload:
+            return mark_safe(
+                f'<img src="{self.get_img.url}"'
+            )
+        return 'Нет изображения'
+
+    image_tmb.short_description = 'Превью'
+    image_tmb.allow_tags = True
+
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
 
@@ -92,6 +92,25 @@ class Photo(models.Model):
                                 verbose_name="Товар",
                                 help_text="Выберите товар")
 
+    @property
+    def get_img(self):
+        return get_thumbnail(self.img, '300x300', crop="center", quality=51)
+
+    def image_tmb(self):
+        if self.img:
+            return mark_safe(
+                f'<img src="{self.get_img.url}"'
+            )
+        return 'Нет изображения'
+
+    image_tmb.short_description = 'Превью'
+    image_tmb.allow_tags = True
+
+    def sorl_delete(**kwargs):
+        delete(kwargs['file'])
+
+    cleanup_pre_delete.connect(sorl_delete)
+
     def __str__(self):
         return self.img.url
 
@@ -99,7 +118,4 @@ class Photo(models.Model):
         verbose_name = "Изображение"
         verbose_name_plural = "Изображения"
 
-    def sorl_delete(**kwargs):
-        delete(kwargs['file'])
 
-    cleanup_pre_delete.connect(sorl_delete)

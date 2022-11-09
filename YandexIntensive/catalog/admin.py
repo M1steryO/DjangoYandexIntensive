@@ -22,9 +22,9 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("item", "image_tmb",)
 
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("item", "image_tmb",)
