@@ -35,13 +35,15 @@ class ModelsTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.category = Category.objects.create(is_published=True,
-                                               name='Тестовая категория',
-                                               slug="test-category-slug",
-                                               weight=150)
-        cls.tag = Tag.objects.create(is_published=True,
-                                     name="Тестовый тег",
-                                     slug="test-tag-slug")
+        cls.category = Category.objects.create(
+            is_published=True,
+            name='Тестовая категория',
+            slug="test-category-slug",
+            weight=150)
+        cls.tag = Tag.objects.create(
+            is_published=True,
+            name="Тестовый тег",
+            slug="test-tag-slug")
 
     def test_create_one_letter(self):
         item_count = Item.objects.count()
@@ -49,9 +51,10 @@ class ModelsTest(TestCase):
         for text, is_correct in self.item_text_checking.items():
             with self.subTest(text=text):
                 if is_correct:
-                    self.item = Item(name="Тестовый item",
-                                     category=self.category,
-                                     text=text)
+                    self.item = Item(
+                        name="Тестовый item",
+                        category=self.category,
+                        text=text)
                     self.item.full_clean()
                     self.item.save()
                     self.item.tags.add(self.tag)

@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def home(request):
-    return HttpResponse("Главная")
+    template_name = 'homepage/index.html'
+    context = {'active': 'home'}
+    return render(request, template_name, context)

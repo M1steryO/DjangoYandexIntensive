@@ -12,6 +12,8 @@ DEBUG = eval(os.getenv("DEBUG", default='True'))
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'django_cleanup.apps.CleanupConfig',
+    'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -21,7 +23,8 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'catalog.apps.CatalogConfig',
     'about.apps.AboutConfig',
-    'core.apps.CoreConfig'
+    'core.apps.CoreConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -39,7 +42,9 @@ ROOT_URLCONF = 'YandexIntensive.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,5 +97,13 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_dev'
+]
+STATIC_ROOT = 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'

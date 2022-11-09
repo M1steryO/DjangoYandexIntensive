@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Item, Category, Tag
+from .models import Item, Category, Tag, Gallery, Photo
 
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ("name", "is_published")
-    fields = ("is_published", "name", "category", "tags", "text")
     list_editable = ("is_published",)
     list_display_links = ("name",)
     filter_horizontal = ('tags',)
@@ -18,4 +17,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Photo)
+class PreviewAdmin(admin.ModelAdmin):
     pass

@@ -14,6 +14,7 @@ def validate_must_be_param(*args):
     @functools.wraps(validate_must_be_param)
     def func(value):
         must_be_in_our_item = set(args)
+
         cleaned_string = re.sub(r'[^\w\s]', '', value)
         cleaned_value = set(cleaned_string.split())
         difference = must_be_in_our_item - cleaned_value
