@@ -50,8 +50,11 @@ class Item(Core):
 
 
 class Gallery(models.Model):
-    upload = models.ImageField(upload_to='uploads/%Y/%m', verbose_name="Изображение", help_text="Загрузите картинку")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name="Товар")
+    upload = models.ImageField(upload_to='uploads/%Y/%m',
+                               verbose_name="Изображение",
+                               help_text="Загрузите картинку")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE,
+                             verbose_name="Товар")
 
     def __str__(self):
         return self.upload.url
@@ -81,7 +84,8 @@ class Gallery(models.Model):
 
 
 class Photo(models.Model):
-    img = models.ImageField(upload_to='preview/%Y/%m', null=True, verbose_name="Изображение",
+    img = models.ImageField(upload_to='preview/%Y/%m',
+                            null=True, verbose_name="Изображение",
                             help_text="Загрузите картинку")
     item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True,
                                 verbose_name="Товар",
