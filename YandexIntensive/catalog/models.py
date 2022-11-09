@@ -41,6 +41,20 @@ class Item(Core):
                                  help_text="Выберете категорию")
     tags = models.ManyToManyField(Tag, verbose_name="Tags")
 
+    @property
+    def get_img(self):
+        return get_thumbnail(self.img, '300x300', crop="center", quality=51)
+
+    def image_tmb(self):
+        if self.upload:
+            return mark_safe(
+                f'<img src="{self.get_img.url}"'
+            )
+        return 'Нет изображения'
+
+    image_tmb.short_description = 'Превью'
+    image_tmb.allow_tags = True
+
     def __str__(self):
         return self.name
 
@@ -63,20 +77,6 @@ class Gallery(models.Model):
         verbose_name = "Изображение"
         verbose_name_plural = "Галлерея"
 
-    @property
-    def get_img(self):
-        return get_thumbnail(self.upload, '300x300', crop="center", quality=51)
-
-    def image_tmb(self):
-        if self.upload:
-            return mark_safe(
-                f'<img src="{self.get_img.url}"'
-            )
-        return 'Нет изображения'
-
-    image_tmb.short_description = 'Превью'
-    image_tmb.allow_tags = True
-
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
 
@@ -84,10 +84,11 @@ class Gallery(models.Model):
 
 
 class Photo(models.Model):
-    img = models.ImageField(upload_to='preview/%Y/%m',
+    img = models.ImageField(upload_to='photo/%Y/%m',
                             null=True, verbose_name="Изображение",
                             help_text="Загрузите картинку")
-    item = models.OneToOneField(Item, on_delete=models.CASCADE, primary_key=True,
+    item = models.OneToOneField(Item, on_delete=models.CASCADE,
+                                primary_key=True,
                                 verbose_name="Товар",
                                 help_text="Выберите товар")
 
@@ -97,20 +98,6 @@ class Photo(models.Model):
     class Meta:
         verbose_name = "Изображение"
         verbose_name_plural = "Изображения"
-
-    @property
-    def get_img(self):
-        return get_thumbnail(self.img, '300x300', crop="center", quality=51)
-
-    def image_tmb(self):
-        if self.img:
-            return mark_safe(
-                f'<img src="{self.get_img.url}"'
-            )
-        return 'Нет изображения'
-
-    image_tmb.short_description = 'Превью'
-    image_tmb.allow_tags = True
 
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
