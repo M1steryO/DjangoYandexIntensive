@@ -89,7 +89,6 @@ class Photo(models.Model):
                             null=True, verbose_name="Изображение",
                             help_text="Загрузите картинку")
     item = models.OneToOneField(Item, on_delete=models.CASCADE,
-                                primary_key=True,
                                 verbose_name="Товар",
                                 help_text="Выберите товар")
 
@@ -116,5 +115,5 @@ class Photo(models.Model):
         return self.img.url
 
     class Meta:
-        verbose_name = "Изображение"
-        verbose_name_plural = "Изображения"
+        verbose_name = "Главное изображение"
+        verbose_name_plural = "Главные изображения"
