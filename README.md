@@ -35,6 +35,10 @@ python manage.py runserver
 
 After that, the application will be launched on http://127.0.0.1:8000/.
 
+## Database Sctructure
+![image](https://user-images.githubusercontent.com/64431505/201345054-e301552a-e01d-4d5f-a04d-13761d551542.png)
+
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
