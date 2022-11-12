@@ -2,7 +2,7 @@
 
 ## Installation
 
-Clone project from github.
+Clone project from GitHub.
 
 ```bash
 git clone https://github.com/M1steryO/DjangoYandexIntensive.git
