@@ -15,7 +15,8 @@ def validate_must_be_param(*args):
     def func(value):
         must_be_in_our_item = set(args)
         html_cleaned_string = re.sub(r"<[^>]+>", "", value, flags=re.S)
-        punctuation_cleaned_string = re.sub(r'[^\w\s]', '', html_cleaned_string)
+        punctuation_cleaned_string = re.sub(r'[^\w\s]', '',
+                                            html_cleaned_string)
 
         cleaned_value = set(punctuation_cleaned_string.split())
         difference = must_be_in_our_item - cleaned_value
