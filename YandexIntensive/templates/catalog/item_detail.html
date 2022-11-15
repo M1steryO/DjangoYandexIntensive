@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}
+    Главная
+{% endblock %}
+{% block content %}
+    <section style="background-color: #eee;">
+        <div class="container-fluid py-5">
+            <div class="row justify-content-center">
+                {% include 'includes/item_card.html' %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

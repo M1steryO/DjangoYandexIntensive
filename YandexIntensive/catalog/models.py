@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Prefetch
 from django.utils.safestring import mark_safe
 from django_cleanup.signals import cleanup_pre_delete
 from sorl.thumbnail import get_thumbnail, delete
@@ -6,6 +7,15 @@ from tinymce.models import HTMLField
 
 from . import validators
 from core.models import Core, CoreWithSlug
+
+
+class TagsManager(models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+                .filter(is_published=True)
+                .only('name')
+        )
 
 
 class Category(CoreWithSlug):
@@ -22,6 +32,7 @@ class Category(CoreWithSlug):
 
 
 class Tag(CoreWithSlug):
+    objects = TagsManager()
 
     def __str__(self):
         return self.name
@@ -31,7 +42,38 @@ class Tag(CoreWithSlug):
         verbose_name_plural = "Теги"
 
 
+class ItemManager(models.Manager):
+    def homepage_published(self):
+        return (
+            self.get_queryset()
+                .only('name', 'category', 'text', 'tags')
+                .filter(is_published=True, is_on_main=True)
+                .select_related('category')
+                .order_by('name')
+                .prefetch_related(
+                Prefetch('tags', queryset=Tag.objects.published())
+
+            )
+        )
+
+    def item_list_published(self):
+        return (
+            self.get_queryset()
+                .only('name', 'category', 'text', 'tags')
+                .filter(is_published=True, is_on_main=False)
+                .select_related('category')
+                .order_by('category__name')
+                .prefetch_related(
+                Prefetch('tags', queryset=Tag.objects.published())
+
+            )
+        )
+
+
 class Item(Core):
+    objects = ItemManager()
+    is_on_main = models.BooleanField(default=False, verbose_name="На главной")
+
     text = HTMLField(validators=[
         validators.validate_must_be_param("превосходно", "роскошно")],
         verbose_name="Описание",

@@ -1,10 +1,14 @@
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
+from django.urls import reverse
 
 from .models import Category, Tag, Item
 
 
 class StaticURLTests(TestCase):
+    fixtures = ['category.json',
+                'tags.json',
+                'item.json']
     endpoint_status = {
         '/catalog/': 200,
         '/catalog/1/': 200,
@@ -95,3 +99,14 @@ class ModelsTest(TestCase):
                         self.category.save()
                     self.assertEqual(Category.objects.count(),
                                      category_count)
+
+
+class TaskPagesTest(TestCase):
+    fixtures = ['category.json',
+                'tags.json',
+                'item.json']
+
+    def test_catalog_page_show_correct_context(self):
+        response = Client().get(reverse('catalog:item_list'))
+        self.assertIn('items', response.context)
+        self.assertEqual(len(response.context['items']), 2)
