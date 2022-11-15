@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django import template
 
 from .models import Item, Category
 
@@ -24,6 +23,3 @@ def item_list(request):
     }
 
     return render(request, template_name, context)
-
-
-

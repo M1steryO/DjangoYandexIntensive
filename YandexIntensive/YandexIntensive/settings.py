@@ -11,6 +11,7 @@ DEBUG = eval(os.getenv("DEBUG", default='True'))
 
 if DEBUG:
     import mimetypes
+
     mimetypes.add_type("application/javascript", ".js", True)
 
 ALLOWED_HOSTS = []
@@ -121,4 +122,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 MEDIA_URL = '/media/'
-
