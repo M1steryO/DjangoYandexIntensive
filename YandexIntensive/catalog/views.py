@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Item, Category
+from .models import Item, Category, Photo
 
 
 def item_detail(request, pk: int):
@@ -15,11 +15,13 @@ def item_detail(request, pk: int):
 def item_list(request):
     template_name = 'catalog/index.html'
     items = Item.objects.item_list_published()
-    categories = Category.objects.all()
+    categories = Category.objects.only('name')
+    photos = Photo.objects.select_related('item')
     context = {
         'active': 'catalog',
         'items': items,
-        'categories': categories
+        'categories': categories,
+        'photos': photos
     }
 
     return render(request, template_name, context)

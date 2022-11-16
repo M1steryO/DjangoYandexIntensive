@@ -1,12 +1,16 @@
 <div class="col-md-8 col-lg-6 col-xl-4">
     <div class="card text-black">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp"
-             class="card-img-top" alt="Apple Computer"/>
+        {% for photo in photos %}
+            {% if photo.item.id == item.id %}
+                <img src="{{ photo.img.url }}"
+                     class="card-img-top" alt="Apple Computer"/>
+            {% endif %}
+        {% endfor %}
         <div class="card-body">
             <div class="text-center">
-{#                <a class="text-decoration-none text-dark" href="{% url  'catalog:i_detail:' item.id %}">#}
-{#                    <h5 class="card-title">{{ item.name }}</h5>#}
-{#                </a>#}
+                {#                <a class="text-decoration-none text-dark" href="{% url  'catalog:i_detail:' item.id %}">#}
+                {#                    <h5 class="card-title">{{ item.name }}</h5>#}
+                {#                </a>#}
                 <h5 class="card-title">{{ item.name }}</h5>
             </div>
 

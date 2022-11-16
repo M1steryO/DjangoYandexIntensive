@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
-{% load poll_extras %}
+
 {% block title %}
     Список товаров
 {% endblock %}
@@ -9,11 +9,13 @@
 {% block content %}
     {% for category in categories %}
         <section style="background-color: #eee;">
-            <h2>{{ category.name }}</h2>
+            <h2 align="center" class="p-5">{{ category.name }}</h2>
             <div class="container-fluid py-5">
                 <div class="row justify-content-center">
-                    {% for item in items|in_category:category.id %}
-                        {% include 'includes/item_card.html' %}
+                    {% for item in items %}
+                        {% if item.category.id  == category.id %}
+                            {% include 'includes/item_card.html' %}
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

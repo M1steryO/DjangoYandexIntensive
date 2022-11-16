@@ -59,9 +59,9 @@ class ItemManager(models.Manager):
     def item_list_published(self):
         return (
             self.get_queryset()
-                .only('name', 'category', 'text', 'tags')
+                .only('name', 'category', 'text', 'tags', 'photo')
                 .filter(is_published=True, is_on_main=False)
-                .select_related('category')
+                .select_related('category', 'photo')
                 .order_by('category__name')
                 .prefetch_related(
                 Prefetch('tags', queryset=Tag.objects.published())
