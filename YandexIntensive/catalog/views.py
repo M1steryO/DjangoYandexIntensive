@@ -6,8 +6,10 @@ from .models import Item, Category, Photo
 def item_detail(request, pk: int):
     template_name = 'catalog/item_detail.html'
     item = get_object_or_404(Item, pk=pk)
+    photo = get_object_or_404(Photo, item=item.id)
     context = {
         'item': item,
+        'photo': photo
     }
     return render(request, template_name, context)
 

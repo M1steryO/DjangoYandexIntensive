@@ -9,11 +9,12 @@
 {% block content %}
     {% for category in categories %}
         <section style="background-color: #eee;">
-            <h2 align="center" class="p-5">{{ category.name }}</h2>
+
             <div class="container-fluid py-5">
                 <div class="row justify-content-center">
                     {% for item in items %}
                         {% if item.category.id  == category.id %}
+                             <h2 align="center" class="p-5">{{ category.name }}</h2>
                             {% include 'includes/item_card.html' %}
                         {% endif %}
                     {% endfor %}

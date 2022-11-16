@@ -23,23 +23,23 @@ class Category(CoreWithSlug):
         validators.validate_category_weight,
     ])
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(CoreWithSlug):
     objects = TagsManager()
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = "Тег"
         verbose_name_plural = "Теги"
+
+    def __str__(self):
+        return self.name
 
 
 class ItemManager(models.Manager):
@@ -60,7 +60,7 @@ class ItemManager(models.Manager):
         return (
             self.get_queryset()
                 .only('name', 'category', 'text', 'tags', 'photo')
-                .filter(is_published=True, is_on_main=False)
+                .filter(is_published=True)
                 .select_related('category', 'photo')
                 .order_by('category__name')
                 .prefetch_related(
@@ -71,7 +71,6 @@ class ItemManager(models.Manager):
 
 
 class Item(Core):
-    objects = ItemManager()
     is_on_main = models.BooleanField(default=False, verbose_name="На главной")
 
     text = HTMLField(validators=[
@@ -83,13 +82,14 @@ class Item(Core):
                                  verbose_name="Категория",
                                  help_text="Выберете категорию")
     tags = models.ManyToManyField(Tag, verbose_name="Tags")
-
-    def __str__(self):
-        return self.name
+    objects = ItemManager()
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
+
+    def __str__(self):
+        return self.name
 
 
 class Gallery(models.Model):
@@ -99,12 +99,12 @@ class Gallery(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE,
                              verbose_name="Товар")
 
-    def __str__(self):
-        return self.upload.url
-
     class Meta:
         verbose_name = "Изображение"
         verbose_name_plural = "Галлерея"
+
+    def __str__(self):
+        return self.upload.url
 
     @property
     def get_img(self):
@@ -134,6 +134,13 @@ class Photo(models.Model):
                                 verbose_name="Товар",
                                 help_text="Выберите товар")
 
+    class Meta:
+        verbose_name = "Главное изображение"
+        verbose_name_plural = "Главные изображения"
+
+    def __str__(self):
+        return self.img.url
+
     @property
     def get_img(self):
         return get_thumbnail(self.img, '300x300', crop="center", quality=51)
@@ -152,10 +159,3 @@ class Photo(models.Model):
         delete(kwargs['file'])
 
     cleanup_pre_delete.connect(sorl_delete)
-
-    def __str__(self):
-        return self.img.url
-
-    class Meta:
-        verbose_name = "Главное изображение"
-        verbose_name_plural = "Главные изображения"
