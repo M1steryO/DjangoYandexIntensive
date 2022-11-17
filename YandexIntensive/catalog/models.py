@@ -19,9 +19,10 @@ class TagsManager(models.Manager):
 
 
 class Category(CoreWithSlug):
-    weight = models.IntegerField(default=100, validators=[
-        validators.validate_category_weight,
-    ])
+    weight = models.IntegerField(
+        default=100,
+        validators=[validators.validate_category_weight, ]
+    )
 
     class Meta:
         verbose_name = "Категория"
@@ -71,17 +72,28 @@ class ItemManager(models.Manager):
 
 
 class Item(Core):
-    is_on_main = models.BooleanField(default=False, verbose_name="На главной")
+    is_on_main = models.BooleanField(
+        default=False,
+        verbose_name="На главной",
+    )
 
-    text = HTMLField(validators=[
-        validators.validate_must_be_param("превосходно", "роскошно")],
+    text = HTMLField(
+        validators=[
+            validators.validate_must_be_param("превосходно", "роскошно"),
+        ],
         verbose_name="Описание",
         help_text='Описание должно быть больше,'
                   'чем из 2х слов и содержать слова "превосходно, роскошно" ')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,
-                                 verbose_name="Категория",
-                                 help_text="Выберете категорию")
-    tags = models.ManyToManyField(Tag, verbose_name="Tags")
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        verbose_name="Категория",
+        help_text="Выберете категорию"
+    )
+    tags = models.ManyToManyField(
+        Tag,
+        verbose_name="Tags"
+    )
     objects = ItemManager()
 
     class Meta:
@@ -93,11 +105,16 @@ class Item(Core):
 
 
 class Gallery(models.Model):
-    upload = models.ImageField(upload_to='uploads/%Y/%m',
-                               verbose_name="Изображение",
-                               help_text="Загрузите картинку")
-    item = models.ForeignKey(Item, on_delete=models.CASCADE,
-                             verbose_name="Товар")
+    upload = models.ImageField(
+        upload_to='uploads/%Y/%m',
+        verbose_name="Изображение",
+        help_text="Загрузите картинку"
+    )
+    item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        verbose_name="Товар"
+    )
 
     class Meta:
         verbose_name = "Изображение"
@@ -108,7 +125,12 @@ class Gallery(models.Model):
 
     @property
     def get_img(self):
-        return get_thumbnail(self.upload, '300x300', crop="center", quality=51)
+        return get_thumbnail(
+            self.upload,
+            '300x300',
+            crop="center",
+            quality=51
+        )
 
     def image_tmb(self):
         if self.upload:
@@ -127,12 +149,17 @@ class Gallery(models.Model):
 
 
 class Photo(models.Model):
-    img = models.ImageField(upload_to='photo/%Y/%m',
-                            null=True, verbose_name="Изображение",
-                            help_text="Загрузите картинку")
-    item = models.OneToOneField(Item, on_delete=models.CASCADE,
-                                verbose_name="Товар",
-                                help_text="Выберите товар")
+    img = models.ImageField(
+        upload_to='photo/%Y/%m',
+        null=True,
+        verbose_name="Изображение",
+        help_text="Загрузите картинку"
+    )
+    item = models.OneToOneField(
+        Item, on_delete=models.CASCADE,
+        verbose_name="Товар",
+        help_text="Выберите товар"
+    )
 
     class Meta:
         verbose_name = "Главное изображение"
@@ -143,7 +170,12 @@ class Photo(models.Model):
 
     @property
     def get_img(self):
-        return get_thumbnail(self.img, '300x300', crop="center", quality=51)
+        return get_thumbnail(
+            self.img,
+            '300x300',
+            crop="center",
+            quality=51
+        )
 
     def image_tmb(self):
         if self.img:

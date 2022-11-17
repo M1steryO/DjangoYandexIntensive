@@ -1,29 +1,35 @@
-<div class="col-md-8 col-lg-6 col-xl-4">
-    <div class="card text-black">
+<div class="d-flex col-sm-12 col-md-8 col-lg-4 me-3 ">
+    <div class="card text-black ">
         {% for photo in photos %}
             {% if photo.item.id == item.id %}
                 <img src="{{ photo.img.url }}"
-                     class="card-img-top" alt="{{ item.name }}"/>
+                     class="card-img-top p-4" alt="{{ item.name }}"/>
             {% endif %}
         {% endfor %}
         <div class="card-body">
             <div class="text-center">
-
                 <a class="text-decoration-none text-dark" href="{% url  'catalog:item_detail' item.id %}">
                     <h5 class="card-title">{{ item.name }}</h5>
                 </a>
-
             </div>
 
             <span class="fw-bold">Описание:</span>
             <span>{{ item.text|safe|truncatewords:10 }}</span>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                <span class="fw-bold">Категория:</span><span>{{ item.category.name }}</span>
+            <div class="row">
+                <div class="d-flex justify-content-between mt-4">
+                    <span class="fw-bold">Категория:</span>
+                    <span>{{ item.category.name }}</span>
+                </div>
             </div>
-            <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                <span class="fw-bold">Тэги:</span><span>{% for tag in item.tags.all %}
-                '{{ tag.name }}'
-            {% endfor %}</span>
+
+
+            <div class="d-flex justify-content-between font-weight-bold mt-4">
+                <span class="fw-bold">Тэги:</span>
+                <span>
+                    {% for tag in item.tags.all %}
+                        '{{ tag.name }}'
+                    {% endfor %}
+                </span>
             </div>
         </div>
     </div>
