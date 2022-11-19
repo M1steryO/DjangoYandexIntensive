@@ -13,8 +13,8 @@ class TagsManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-                .filter(is_published=True)
-                .only('name')
+            .filter(is_published=True)
+            .only('name')
         )
 
 
@@ -47,11 +47,11 @@ class ItemManager(models.Manager):
     def homepage_published(self):
         return (
             self.get_queryset()
-                .only('name', 'category', 'text', 'tags')
-                .filter(is_published=True, is_on_main=True)
-                .select_related('category')
-                .order_by('name')
-                .prefetch_related(
+            .only('name', 'category', 'text', 'tags')
+            .filter(is_published=True, is_on_main=True)
+            .select_related('category')
+            .order_by('name')
+            .prefetch_related(
                 Prefetch('tags', queryset=Tag.objects.published())
 
             )
@@ -60,11 +60,11 @@ class ItemManager(models.Manager):
     def item_list_published(self):
         return (
             self.get_queryset()
-                .only('name', 'category', 'text', 'tags', 'photo')
-                .filter(is_published=True)
-                .select_related('category', 'photo')
-                .order_by('category__name')
-                .prefetch_related(
+            .only('name', 'category', 'text', 'tags', 'photo')
+            .filter(is_published=True)
+            .select_related('category', 'photo')
+            .order_by('category__name')
+            .prefetch_related(
                 Prefetch('tags', queryset=Tag.objects.published())
 
             )
@@ -94,6 +94,7 @@ class Item(Core):
         Tag,
         verbose_name="Tags"
     )
+
     objects = ItemManager()
 
     class Meta:
@@ -102,6 +103,31 @@ class Item(Core):
 
     def __str__(self):
         return self.name
+
+    def image_tmb(self):
+        image = Photo.objects.get(item=self.id).img
+
+        def get_img(img):
+            return get_thumbnail(
+                img,
+                '300x300',
+                crop="center",
+                quality=51
+            )
+
+        if image:
+            return mark_safe(
+                f'<img src="{get_img(image).url}"'
+            )
+        return 'No image'
+
+    image_tmb.short_description = 'Preview'
+    image_tmb.allow_tags = True
+
+    def sorl_delete(**kwargs):
+        delete(kwargs['file'])
+
+    cleanup_pre_delete.connect(sorl_delete)
 
 
 class Gallery(models.Model):
@@ -122,25 +148,6 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.upload.url
-
-    @property
-    def get_img(self):
-        return get_thumbnail(
-            self.upload,
-            '300x300',
-            crop="center",
-            quality=51
-        )
-
-    def image_tmb(self):
-        if self.upload:
-            return mark_safe(
-                f'<img src="{self.get_img.url}"'
-            )
-        return 'Нет изображения'
-
-    image_tmb.short_description = 'Превью'
-    image_tmb.allow_tags = True
 
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
@@ -167,25 +174,6 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.img.url
-
-    @property
-    def get_img(self):
-        return get_thumbnail(
-            self.img,
-            '300x300',
-            crop="center",
-            quality=51
-        )
-
-    def image_tmb(self):
-        if self.img:
-            return mark_safe(
-                f'<img src="{self.get_img.url}"'
-            )
-        return 'Нет изображения'
-
-    image_tmb.short_description = 'Превью'
-    image_tmb.allow_tags = True
 
     def sorl_delete(**kwargs):
         delete(kwargs['file'])
