@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Обратная связь
+{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <h2>Обратная связь</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary w-100 mt-3" type="submit">Отправить</button>
+
+        </form>
+    </div>
+
+{% endblock %}

@@ -7,5 +7,14 @@
 {% block content %}
 
     {% include 'includes/item_card_list.html' %}
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'feedback:feedback' %}">
+            <button type="button" class="btn btn-danger btn-lg mt-5 me-3">
+                Сообщить о проблеме
+            </button>
+
+        </a>
+    </div>
+
 
 {% endblock %}

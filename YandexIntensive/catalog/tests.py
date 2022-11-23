@@ -11,7 +11,6 @@ class StaticURLTests(TestCase):
                 'item.json']
     endpoint_status = {
         '/catalog/': 200,
-        '/catalog/1/': 200,
         '/catalog/0/': 404,
         '/catalog/-1/': 404,
         '/catalog/1str/': 404,
