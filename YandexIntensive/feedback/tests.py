@@ -1,7 +1,7 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from .forms import FeedbackForm
+from .forms import FeedbackForm, FeedbackModel
 
 
 class FormTests(TestCase):
@@ -34,4 +34,6 @@ class FormTests(TestCase):
             data=form_data,
             follow=True
         )
+        feedback_count = FeedbackModel.objects.count()
         self.assertRedirects(response, reverse('feedback:feedback'))
+        self.assertEqual(feedback_count, 1)

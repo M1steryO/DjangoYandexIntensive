@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
-from .forms import FeedbackForm
+from .forms import FeedbackForm, FeedbackModel
 
 
 def feedback(request):
@@ -23,4 +23,8 @@ def send_form(request, form):
         ['to@example.com'],
         fail_silently=True,
     )
+    fb = FeedbackModel.objects.create(
+        text=form.cleaned_data['text']
+    )
+    fb.save()
     return redirect("feedback:feedback")

@@ -4,10 +4,8 @@ import datetime
 
 
 class FeedbackModel(models.Model):
-    text = models.TextField(
-        help_text=""
-    )
-    created_on = models.DateTimeField(datetime.datetime.now())
+    text = models.TextField()
+    created_on = models.DateTimeField(default=datetime.datetime.now())
 
 
 class FeedbackForm(forms.ModelForm):
