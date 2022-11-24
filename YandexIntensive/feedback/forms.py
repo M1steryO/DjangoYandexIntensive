@@ -1,11 +1,6 @@
 from django import forms
-from django.db import models
-import datetime
 
-
-class FeedbackModel(models.Model):
-    text = models.TextField()
-    created_on = models.DateTimeField(default=datetime.datetime.now())
+from .models import FeedbackModel
 
 
 class FeedbackForm(forms.ModelForm):

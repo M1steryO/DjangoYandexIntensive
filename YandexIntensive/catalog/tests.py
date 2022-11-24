@@ -16,6 +16,10 @@ class StaticURLTests(TestCase):
         '/catalog/1str/': 404,
     }
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
     def test_catalog_pages(self):
         for url, status in self.endpoint_status.items():
             with self.subTest(url=url):
