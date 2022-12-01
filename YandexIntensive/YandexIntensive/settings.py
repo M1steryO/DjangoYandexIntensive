@@ -9,6 +9,9 @@ SECRET_KEY = os.getenv("SECRET_KEY", 'unsafe-secret-key')
 
 DEBUG = eval(os.getenv("DEBUG", default='True'))
 
+LOGIN_URL = 'auth/login/'
+LOGIN_REDIRECT_URL = '/'
+
 if DEBUG:
     import mimetypes
 
@@ -37,7 +40,8 @@ INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',
-    'feedback.apps.FeedbackConfig'
+    'feedback.apps.FeedbackConfig',
+    'users.apps.UsersConfig'
 
 ]
 
