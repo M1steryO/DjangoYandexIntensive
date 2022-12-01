@@ -16,6 +16,3 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "Дополнительное поле"
         verbose_name_plural = "Дополнительные поля"
-
-
-
