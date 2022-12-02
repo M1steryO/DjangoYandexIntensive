@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import UpdateProfileForm, UpdateUserForm, CustomUserCreationForm
+from .forms import UpdateProfileForm,\
+    UpdateUserForm,\
+    CustomUserCreationForm
 from .models import Profile, CustomUser
 
 
