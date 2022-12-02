@@ -132,3 +132,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / "send_mail"
 
 EMAIL_SENDER = os.getenv('EMAIL_SENDER')
+
+AUTH_USER_MODEL = 'users.CustomUser'

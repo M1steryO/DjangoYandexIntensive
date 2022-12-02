@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 
 from .forms import UpdateProfileForm, UpdateUserForm, CustomUserCreationForm
-from .models import Profile
+from .models import Profile, CustomUser
 
 
 @login_required
@@ -43,7 +43,7 @@ def profile(request):
 
 def user_detail(request, pk):
     template_name = "users/user_detail.html"
-    user = User.objects.get(pk=pk)
+    user = CustomUser.objects.get(pk=pk)
     context = {
         'user': user,
     }
@@ -52,9 +52,10 @@ def user_detail(request, pk):
 
 def user_list(request):
     template_name = "users/user_list.html"
-    users = User.objects.filter(is_superuser=False)
+    users = CustomUser.objects.filter(is_superuser=False)
     context = {
         'users': users,
+        'active': True
     }
 
     return render(request, template_name, context)

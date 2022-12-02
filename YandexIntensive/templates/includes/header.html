@@ -15,6 +15,9 @@
                 <li><a href="{% url 'catalog:item_list' %}"
                        class="nav-link px-2 {% if active == 'catalog' %}text-light disabled{% else %}text-secondary{% endif %}">Список
                     товаров</a></li>
+                <li><a href="{% url 'users:user_list' %}"
+                       class="nav-link px-2 {% if active == 'user_list' %}text-light disabled{% else %}text-secondary{% endif %}">Список
+                    пользователей</a></li>
             </ul>
             {% if user.is_authenticated %}
 
@@ -25,7 +28,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:profile' %}"><i
-                                class="bi bi-person me-2"></i>Привет, {{ user.username }}</a>
+                                class="bi bi-person me-2"></i>Привет, {{ user.email }}</a>
                     </li>
                 </ul>
             {% else %}

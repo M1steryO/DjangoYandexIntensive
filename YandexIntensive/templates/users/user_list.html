@@ -10,7 +10,6 @@
             <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">Псевдоним</th>
                 <th scope="col">Почта</th>
                 <th scope="col">День рождения</th>
             </tr>
@@ -18,10 +17,9 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ user.username }}</td>
+                    <th scope="row"><a href="{% url 'users:user_detail' user.id %}">{{ forloop.counter }}</a></th>
                     <td>{{ user.email }}</td>
-                    <td>{{  user.profile.birthday }}</td>
+                    <td>{{ user.profile.birthday }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, CustomUser
 
 
 class UpdateProfileForm(forms.ModelForm):
@@ -30,8 +29,8 @@ class UpdateUserForm(forms.ModelForm):
             field.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = User
-        fields = ['username', 'email']
+        model = CustomUser
+        fields = ['email']
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -42,8 +41,8 @@ class CustomUserCreationForm(UserCreationForm):
             field.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        fields = ['username', 'email', 'password1', 'password2']
-        model = User
+        model = CustomUser
+        fields = ['email', 'password1', 'password2']
 
 
 class LoginUserForm(AuthenticationForm):
@@ -53,17 +52,5 @@ class LoginUserForm(AuthenticationForm):
             field.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
-
-
-class CustomUserCreationForm(UserCreationForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.visible_fields():
-            field.field.widget.attrs['class'] = 'form-control'
-
-    class Meta:
-        fields = ['username', 'email', 'password1', 'password2']
-        model = User
